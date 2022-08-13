@@ -16,13 +16,14 @@ public class Todo {
 		super();
 	}
 
-	public Todo(Long id, String title, String username, String description, LocalDate targetDate) {
+	public Todo(Long id, String title, String username, String description, LocalDate targetDate, Boolean status) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.username = username;
 		this.description = description;
 		this.targetDate = targetDate;
+		this.status = status;
 	}
 
 	public Todo(String title, String username, String description, LocalDate targetDate) {
