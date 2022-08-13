@@ -26,12 +26,13 @@ public class Todo {
 		this.status = status;
 	}
 
-	public Todo(String title, String username, String description, LocalDate targetDate) {
+	public Todo(String title, String username, String description, LocalDate targetDate, Boolean status) {
 		super();
 		this.title = title;
 		this.username = username;
 		this.description = description;
 		this.targetDate = targetDate;
+		this.status = status;
 	}
 
 	public Long getId() {

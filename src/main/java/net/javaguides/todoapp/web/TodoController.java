@@ -2,6 +2,7 @@ package net.javaguides.todoapp.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -79,5 +80,36 @@ public class TodoController extends HttpServlet{
 	
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
+		Todo existingTodo = todoDAO.selectTodo(id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/todo/todo-form.jsp");
+		request.setAttribute("todo", existingTodo);
+		dispatcher.forward(request, response);
+	}
+	
+	private void insertTodo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+		String title = request.getParameter("title");
+		String username = request.getParameter("username");
+		String description = request.getParameter("description");
+		
+		boolean isDone = Boolean.valueOf(request.getParameter("isDone"));
+		Todo newTodo = new Todo(title, username, description, LocalDate.now(), isDone);
+		
+		todoDAO.insertTodo(newTodo);
+		response.sendRedirect("list");
+	}
+	
+	private void updateTodo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+		Long id = (long) Integer.parseInt(request.getParameter("id"));
+		String title = request.getParameter("title");
+		String username = request.getParameter("username");
+		String description = request.getParameter("description");
+		LocalDate targetDate = LocalDate.parse(request.getParameter("targetDate"));
+		
+		boolean isDone = Boolean.valueOf(request.getParameter("isDone"));
+		
+		Todo updateTodo = new Todo(id, title, username, description, targetDate, isDone);
+		todoDAO.updateTodo(updateTodo);
+		response.sendRedirect("list");
+	}
 	
 }
