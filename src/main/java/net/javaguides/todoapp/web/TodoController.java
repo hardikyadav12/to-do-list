@@ -112,4 +112,9 @@ public class TodoController extends HttpServlet{
 		response.sendRedirect("list");
 	}
 	
+	private void deleteTodo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		todoDAO.deleteTodo(id);
+		response.sendRedirect("list");
+	}
 }
